@@ -29,11 +29,22 @@ class ListingDao {
         })
     }
 
-    changeRating = (id, rating) => {
+    changeRating = (listing) => {
 
         return new Promise(async (resolve, reject) => {
             try {
-                resolve(await Listing.updateOne({ _id: id }, { $set: { rating } }));
+                resolve(await Listing.updateOne({ _id: listing._id }, { $set: { rating: listing.rating, numberOfRatings: listing.numberOfRatings } }));
+            } catch (err) {
+                reject(err.toString());
+            };
+        })
+    }
+
+    listById = (id) => {
+
+        return new Promise(async (resolve, reject) => {
+            try {
+                resolve(await Listing.findOne({ _id: id }));
             } catch (err) {
                 reject(err.toString());
             };
