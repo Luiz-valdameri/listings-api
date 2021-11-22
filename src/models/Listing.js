@@ -1,6 +1,7 @@
-const mongoose = require('../config/DatabaseConfig');
+const { ObjectId } = require('bson');
+const mongoose = require('mongoose');
 
-const Listing = new mongoose.Schema({
+const ListingSchema = new mongoose.Schema({
     title: String,
     description: String,
     price: Number,
@@ -9,6 +10,8 @@ const Listing = new mongoose.Schema({
     creationDate: Date,
     rating: Number,
     numberOfRatings: Number,
-}, { collection: 'users' });
+}, { collection: 'listings' });
 
-module.exports = { Listing }
+const Listing = mongoose.model('Listing', ListingSchema)
+
+module.exports = Listing
