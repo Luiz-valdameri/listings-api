@@ -5,6 +5,9 @@ module.exports = app => {
     app.post('/listing', (req, res) => {
         var { listing } = req.body;
 
+        listing.rating = 0;
+        listing.numberOfRatings = 0;
+
         ListingDao.create(listing)
             .then(response => {
                 res.status(200).json(response)
@@ -28,11 +31,11 @@ module.exports = app => {
     })
 
     app.put('/listing/rate', (req, res) => {
-        const { id, rating } = req.body.listing;
+        const { _id, rating } = req.body.listing;
 
-        ListingDao.listById(id).then(listing => {
+        ListingDao.listById(_id).then(listing => {
 
-            listing.numberOfRatings += 1;
+            listing.numberOfRatings ? listing.numberOfRatings += 1 : listing.numberOfRatings = 1;
             listing.rating = (listing.rating + rating) / listing.numberOfRatings;
     
                 ListingDao.changeRating(listing)

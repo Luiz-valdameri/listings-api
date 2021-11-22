@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser')
 const consign = require('consign')
 const cors = require('cors')
-const { handleError } = require('./ErrorHandler.js')
 const mongoose = require('mongoose');
 
 module.exports = () => {
@@ -12,7 +11,6 @@ module.exports = () => {
 
     app.use(bodyParser.json());
     app.use(cors())
-    app.use(handleError);
 
     consign()
         .include('./src/controllers')
